@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/* Design tokens: colori presi dalle foto (farina, sfoglia all'uovo, frittura, pomodoro, giardino) */
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+
+  --color-farina: #f4ecdd;
+  --color-panna: #fbf7ef;
+  --color-sfoglia: #edb83d;
+  --color-crosta: #c9772b;
+  --color-pomodoro: #c8361e;
+  --color-pomodoro-scuro: #a92a15;
+  --color-basilico: #2f4a26;
+  --color-oliva: #6b7a3a;
+  --color-terra: #5a3a26;
+  --color-inchiostro: #1c1712;
+  --color-notte: #121a14;
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Tono della pagina: cambia con l'ora del giorno mentre scorri */
+:root {
+  --bg: var(--color-farina);
+  --fg: var(--color-inchiostro);
+  --accent: var(--color-pomodoro);
+  --line: color-mix(in oklab, var(--fg) 14%, transparent);
+}
+:root[data-tone="sfoglia"] { --bg: #f2dcaa; --fg: #2a1d10; }
+:root[data-tone="sugo"] { --bg: #eec064; --fg: #241708; --accent: var(--color-pomodoro-scuro); }
+:root[data-tone="tramonto"] { --bg: #a84e22; --fg: #fff3e2; --accent: var(--color-sfoglia); }
+:root[data-tone="notte"] { --bg: var(--color-notte); --fg: var(--color-farina); --accent: var(--color-sfoglia); }
+:root[data-tone="basilico"] { --bg: var(--color-basilico); --fg: var(--color-farina); --accent: var(--color-sfoglia); }
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color 800ms var(--ease-out-strong), color 800ms var(--ease-out-strong);
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+button, [role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+::selection {
+  background: var(--color-sfoglia);
+  color: var(--color-inchiostro);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-pomodoro);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Grana di farina sopra tutto: dà materia alle superfici piatte */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition-duration: 200ms; }
+}
