@@ -57,6 +57,18 @@ export default function Footer() {
             {site.address}, {site.city}
           </p>
         </div>
+        <p className="mt-4 text-xs opacity-70">
+          Developed and Designed by{' '}
+          <a
+            href="https://gianluh.dev"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 font-bold underline underline-offset-2"
+          >
+            Gianluca De Maio
+            <i className="ri-external-link-line" aria-hidden />
+          </a>
+        </p>
       </div>
     </footer>
   )
